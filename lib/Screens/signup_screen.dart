@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:monogram/Screens/signup_screen.dart';
+import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Widgets/button.dart';
 import 'package:monogram/Widgets/social_media_login.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,22 +66,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  Button(title: "Login", onPressed: () {}),
+                  Button(title: "Register", onPressed: () {}),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Center(child: Text("Don't have an account?")),
+                      Center(child: Text("Already have an account?")),
                       Center(
                         child: InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => SignupScreen(),
+                                builder: (context) => LoginScreen(),
                               ),
                             );
                           },
-                          child: Text(" Create Now"),
+                          child: Text(" Login Now"),
                         ),
                       ),
                     ],
