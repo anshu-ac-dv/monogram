@@ -18,19 +18,23 @@ class _SignupScreenState extends State<SignupScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(20),
-              child: Center(
-                child: Text(
-                  "Monogram",
-                  style: GoogleFonts.lobster(fontSize: 40),
-                ),
+              child: Text(
+                "Welcome",
+                style: GoogleFonts.lobster(fontSize: 40),
               ),
             ),
-            SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Text(
+                "Register Now",
+                style: GoogleFonts.lobster(fontSize: 20),
+              ),
+            ),
             Form(
               child: Column(
                 children: [
