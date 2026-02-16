@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "573618732498",
+    "project_id": "monogram-2b4e3",
+    "storage_bucket": "monogram-2b4e3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573618732498:android:2826c1c384a6db24a2dc0b",
+        "android_client_info": {
+          "package_name": "com.monogram.monogram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPIQz3jtvvAE7_1Qsk6l7Ico_Vw5RcR8M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
