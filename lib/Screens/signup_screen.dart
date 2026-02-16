@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:monogram/Screens/home_screen.dart';
 import 'package:monogram/Screens/login_screen.dart';
+import 'package:monogram/Toast/errorToast.dart';
 import 'package:monogram/Widgets/button.dart';
 import 'package:monogram/Widgets/social_media_login.dart';
 
@@ -12,6 +15,45 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  bool loading = false;
+  final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void register() {
+    setState(() {
+      loading = true;
+    });
+    auth
+        .createUserWithEmailAndPassword(
+      email: emailController.text.toString(),
+      password: passwordController.text.toString(),
+    )
+        .then((onValue) {
+      setState(() {
+        loading = false;
+      });
+      Errortoast().SuccessToast("Register Successfully");
+      Navigator.push(
+        (context),
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    })
+        .onError((error, stackTrace) {
+      Errortoast().showToast(error.toString());
+      setState(() {
+        loading = false;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       top: 20,
                     ),
                     child: TextFormField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         hintText: "Email",
                         border: OutlineInputBorder(
@@ -52,6 +95,12 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         prefixIcon: Icon(Icons.email),
                       ),
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return "Please enter your email";
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   Padding(
@@ -61,6 +110,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       top: 20,
                     ),
                     child: TextFormField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                         hintText: "Password",
                         border: OutlineInputBorder(
@@ -68,9 +118,19 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         prefixIcon: Icon(Icons.password),
                       ),
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return "Please enter your Password";
+                        }
+                        return null;
+                      },
                     ),
                   ),
-                  Button(title: "Register", onPressed: () {}),
+                  Button(title: "Register", onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      register();
+                    }
+                  }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

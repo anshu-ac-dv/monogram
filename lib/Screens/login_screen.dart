@@ -12,6 +12,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool loading = false;
+  final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       top: 20,
                     ),
                     child: TextFormField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         hintText: "Email",
                         border: OutlineInputBorder(
@@ -52,6 +65,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         prefixIcon: Icon(Icons.email),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter your email";
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   Padding(
@@ -61,6 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       top: 20,
                     ),
                     child: TextFormField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                         hintText: "Password",
                         border: OutlineInputBorder(
@@ -68,9 +88,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         prefixIcon: Icon(Icons.password),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter your email";
+                        }
+                        return null;
+                      },
                     ),
                   ),
-                  Button(title: "Login", onPressed: () {}),
+                  Button(title: "Login", onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      setState(() {
+                        loading = true;
+                      });
+                    }
+                  }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
