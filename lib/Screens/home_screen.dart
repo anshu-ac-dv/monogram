@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:monogram/Screens/ProfileScreen.dart';
+import 'package:monogram/Screens/SearchScreen.dart';
 import 'package:monogram/Screens/addPost.dart';
+import 'package:monogram/Screens/chatScreen.dart';
 import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Toast/errorToast.dart';
 
@@ -14,6 +17,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final auth = FirebaseAuth.instance;
+  int _currentIndex = 0;
+  final List<Widget> _screens = [
+    const HomeScreen(),    // Your existing Home widget
+    const Searchscreen(),  // Your existing Search widget
+    const Chatscreen(), // Your existing Profile widget
+    const Profilescreen(), // Your existing Profile widget
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -51,30 +61,33 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 20),
-              child: Text(
-                "Welcome, ${auth.currentUser!.email}",
-                style: GoogleFonts.lobster(fontSize: 20),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 10, bottom: 10),
-              child: Text(
-                "Suggested posts for you",
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
+      body:
+      _screens[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index; // This triggers a rebuild with the new screen
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message),
+            label: 'Messages',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }
