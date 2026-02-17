@@ -53,12 +53,24 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(left: 20, top: 20),
               child: Text(
                 "Welcome, ${auth.currentUser!.email}",
                 style: GoogleFonts.lobster(fontSize: 20),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 10, bottom: 10),
+              child: Text(
+                "Suggested posts for you",
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],
