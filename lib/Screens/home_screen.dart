@@ -18,10 +18,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Monogram", style: GoogleFonts.lobster(fontSize: 30),),
+        title: Text("Monogram", style: GoogleFonts.lobster(fontSize: 30)),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
+        leading: IconButton(onPressed: () {}, icon: Icon(Icons.add)),
         actions: [
           IconButton(
             onPressed: () {
