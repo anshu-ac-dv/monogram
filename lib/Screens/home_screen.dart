@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:monogram/Screens/addPost.dart';
 import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Toast/errorToast.dart';
 
@@ -22,7 +23,15 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        leading: IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Addpost()),
+            );
+          },
+          icon: Icon(Icons.add, color: Colors.black, size: 30),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -38,9 +47,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     Errortoast().showToast(error.toString());
                   });
             },
-            icon: Icon(Icons.logout),
+            icon: Icon(Icons.logout_outlined, color: Colors.black, size: 30),
           ),
         ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                "Welcome, ${auth.currentUser!.email}",
+                style: GoogleFonts.lobster(fontSize: 20),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
