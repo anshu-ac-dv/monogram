@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Toast/errorToast.dart';
 
@@ -17,9 +18,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Monogram", style: GoogleFonts.lobster(fontSize: 30),),
         centerTitle: true,
-        backgroundColor: Colors.lightGreenAccent,
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: () {
