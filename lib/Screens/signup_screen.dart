@@ -22,6 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
+  @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
@@ -34,157 +35,168 @@ class _SignupScreenState extends State<SignupScreen> {
     });
     auth
         .createUserWithEmailAndPassword(
-      email: emailController.text.toString(),
-      password: passwordController.text.toString(),
-    )
+          email: emailController.text
+              .trim(), // Added trim() to avoid whitespace errors
+          password: passwordController.text.toString(),
+        )
         .then((onValue) {
-      setState(() {
-        loading = false;
-      });
-      Errortoast().SuccessToast("Register Successfully");
-      Navigator.push(
-        (context),
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-    })
+          setState(() {
+            loading = false;
+          });
+          Errortoast().SuccessToast("Register Successfully");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+          );
+        })
         .onError((error, stackTrace) {
-      Errortoast().showToast(error.toString());
-      setState(() {
-        loading = false;
-      });
-    });
+          Errortoast().showToast(error.toString());
+          setState(() {
+            loading = false;
+          });
+        });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                "Welcome",
-                style: GoogleFonts.lobster(fontSize: 40),
+        child: SingleChildScrollView(
+          // Added scroll view to prevent overflow
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  "Welcome",
+                  style: GoogleFonts.lobster(fontSize: 40),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                "Register Now",
-                style: GoogleFonts.lobster(fontSize: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  "Register Now",
+                  style: GoogleFonts.lobster(fontSize: 20),
+                ),
               ),
-            ),
-            Form(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 20,
-                    ),
-                    child: TextFormField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+              Form(
+                key: _formKey, // CRITICAL: Added the form key here
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: TextFormField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          hintText: "Email",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(Icons.email),
                         ),
-                        prefixIcon: Icon(Icons.email),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your email";
+                          }
+                          return null;
+                        },
                       ),
-                      validator: (value){
-                        if(value == null || value.isEmpty){
-                          return "Please enter your email";
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField(
+                        controller: passwordController,
+                        obscureText: true, // Hide password text
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(Icons.password),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your Password";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Button(
+                      title: "Register",
+                      loading: loading, // Pass loading state to show spinner
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          register();
                         }
-                        return null;
                       },
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 20,
-                    ),
-                    child: TextFormField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        prefixIcon: Icon(Icons.password),
-                      ),
-                      validator: (value){
-                        if(value == null || value.isEmpty){
-                          return "Please enter your Password";
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Button(title: "Register", onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      register();
-                    }
-                  }),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(child: Text("Already have an account?")),
-                      Center(
-                        child: InkWell(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Already have an account?"),
+                        InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LoginScreen(),
+                                builder: (context) => const LoginScreen(),
                               ),
                             );
                           },
-                          child: Text(" Login Now"),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 40),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Divider(
-                            color: Colors.grey.shade900,
-                            thickness: 1,
+                          child: const Text(
+                            " Login Now",
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                      Text("Or"),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: Divider(
-                            color: Colors.grey.shade900,
-                            thickness: 1,
+                      ],
+                    ),
+                    const SizedBox(height: 40),
+                    // ... rest of your UI (Dividers and Social Login)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Image.asset("images/google.png", height: 50),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  SocialMediaLogin(),
-                  SizedBox(height: 80,)
-                ],
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Image.asset(
+                              "images/facebook.png",
+                              height: 50,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Image.asset("images/x.png", height: 50),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 80),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
