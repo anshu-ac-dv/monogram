@@ -16,6 +16,7 @@ class _AddpostState extends State<Addpost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightGreenAccent,
         title: Text("Add Post", style: GoogleFonts.lobster(fontSize: 30)),
         centerTitle: true,
       ),
