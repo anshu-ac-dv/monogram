@@ -5,9 +5,7 @@ import 'package:monogram/Screens/ProfileScreen.dart';
 import 'package:monogram/Screens/SearchScreen.dart';
 import 'package:monogram/Screens/addPost.dart';
 import 'package:monogram/Screens/chatScreen.dart';
-import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Screens/welcomeScreen.dart';
-import 'package:monogram/Toast/errorToast.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,29 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.lightGreenAccent,
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 15),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              onPressed: () {
-                auth.signOut().then((value) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()),
-                    (route) => false,
-                  );
-                }).onError((error, stackTrace) {
-                  Errortoast().showToast(error.toString());
-                });
-              },
-              icon: const Icon(Icons.logout_rounded, color: Colors.black87, size: 24),
-            ),
-          ),
-        ],
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomAppBar(
