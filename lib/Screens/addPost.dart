@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:monogram/Widgets/bottomNavigation.dart';
 import 'package:monogram/Widgets/button.dart';
 
 class Addpost extends StatefulWidget {
@@ -38,10 +37,7 @@ class _AddpostState extends State<Addpost> {
           Button(
             title: 'Submit Post',
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Bottomnavigation()),
-              );
+
             },
           ),
         ],

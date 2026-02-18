@@ -22,7 +22,7 @@ class _ProfilescreenState extends State<Profilescreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20, top: 10),
             child: Text("Profile", style: GoogleFonts.oswald(fontSize: 20)),
           ),
           Button(

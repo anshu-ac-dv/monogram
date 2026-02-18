@@ -11,14 +11,10 @@ class Welcomescreen extends StatefulWidget {
 class _WelcomescreenState extends State<Welcomescreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Text("Suggested post for you", style: GoogleFonts.oswald(fontSize: 15)),
-          )
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, top: 10),
+        child: Text("Suggested post for you", style: GoogleFonts.oswald(fontSize: 20)),
       ),
     );
   }
