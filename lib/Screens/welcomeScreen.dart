@@ -43,7 +43,8 @@ class _WelcomescreenState extends State<Welcomescreen> {
                 ],
               )
             ],
-          )
+          ),
+
         ],
       )
     );
