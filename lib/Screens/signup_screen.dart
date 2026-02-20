@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/home_screen.dart';
-import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Toast/errorToast.dart';
 import 'package:monogram/Widgets/button.dart';
 import 'package:monogram/Widgets/social_media_login.dart';
@@ -42,9 +41,10 @@ class _SignupScreenState extends State<SignupScreen> {
             loading = false;
           });
           Errortoast().SuccessToast("Register Successfully");
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),
+            (route) => false,
           );
         })
         .onError((error, stackTrace) {
@@ -65,7 +65,6 @@ class _SignupScreenState extends State<SignupScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Unique Header with Gradient (Opposite side of Login)
             Container(
               height: size.height * 0.25,
               width: double.infinity,
@@ -163,10 +162,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const LoginScreen()),
-                            );
+                            // Go back to the existing login screen
+                            Navigator.pop(context);
                           },
                           child: const Text(
                             "Login",

@@ -41,9 +41,11 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {
             loading = false;
           });
-          Navigator.pushReplacement(
+          // Clear stack so back button doesn't return to Login
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),
+            (route) => false,
           );
         })
         .onError((error, errorStack) {
@@ -64,9 +66,8 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Unique Header with Gradient
             Container(
-              height: size.height * 0.30,
+              height: size.height * 0.25,
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -118,7 +119,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 30),
                     
-                    // Styled Email Field
                     _buildTextField(
                       controller: emailController,
                       hint: "Email",
@@ -131,7 +131,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 20),
                     
-                    // Styled Password Field
                     _buildTextField(
                       controller: passwordController,
                       hint: "Password",

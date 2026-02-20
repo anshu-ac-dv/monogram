@@ -1,6 +1,11 @@
+import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:monogram/Widgets/button.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:monogram/Toast/errorToast.dart';
 
 class Addpost extends StatefulWidget {
   const Addpost({super.key});
@@ -12,11 +17,71 @@ class Addpost extends StatefulWidget {
 class _AddpostState extends State<Addpost> {
   final titleController = TextEditingController();
   bool loading = false;
+  final databaseRef = FirebaseDatabase.instance.ref('Posts');
+  final auth = FirebaseAuth.instance;
+  
+  File? _image;
+  final picker = ImagePicker();
+  firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
 
   @override
   void dispose() {
     titleController.dispose();
     super.dispose();
+  }
+
+  Future getGalleryImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print("no image picked");
+      }
+    });
+  }
+
+  void uploadPost() async {
+    if (titleController.text.isEmpty && _image == null) {
+      Errortoast().showToast("Please enter text or select an image");
+      return;
+    }
+
+    setState(() {
+      loading = true;
+    });
+
+    String id = DateTime.now().millisecondsSinceEpoch.toString();
+    String? imageUrl;
+
+    try {
+      if (_image != null) {
+        firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref('/monogram/' + id);
+        firebase_storage.UploadTask uploadTask = ref.putFile(_image!.absolute);
+        await Future.value(uploadTask);
+        imageUrl = await ref.getDownloadURL();
+      }
+
+      await databaseRef.child(id).set({
+        'id': id,
+        'title': titleController.text.toString(),
+        'email': auth.currentUser?.email.toString(),
+        'uid': auth.currentUser?.uid.toString(),
+        'time': id,
+        'postImage': imageUrl ?? "",
+      });
+
+      setState(() {
+        loading = false;
+      });
+      Errortoast().SuccessToast("Post Uploaded Successfully");
+      Navigator.pop(context);
+    } catch (e) {
+      setState(() {
+        loading = false;
+      });
+      Errortoast().showToast(e.toString());
+    }
   }
 
   @override
@@ -45,9 +110,7 @@ class _AddpostState extends State<Addpost> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: ElevatedButton(
-              onPressed: () {
-                // Submit Logic
-              },
+              onPressed: loading ? null : uploadPost,
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColor,
                 foregroundColor: Colors.white,
@@ -56,7 +119,13 @@ class _AddpostState extends State<Addpost> {
                 ),
                 elevation: 0,
               ),
-              child: const Text("Post", style: TextStyle(fontWeight: FontWeight.bold)),
+              child: loading
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    )
+                  : const Text("Post", style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           )
         ],
@@ -65,7 +134,6 @@ class _AddpostState extends State<Addpost> {
         child: Column(
           children: [
             if (loading) const LinearProgressIndicator(),
-            
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -81,7 +149,7 @@ class _AddpostState extends State<Addpost> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "anshu_kr",
+                          auth.currentUser?.email?.split('@')[0] ?? "User",
                           style: GoogleFonts.roboto(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -90,7 +158,7 @@ class _AddpostState extends State<Addpost> {
                         const SizedBox(height: 5),
                         TextFormField(
                           controller: titleController,
-                          maxLines: null, // Auto-expanding
+                          maxLines: null,
                           style: GoogleFonts.roboto(fontSize: 18),
                           decoration: InputDecoration(
                             hintText: "What's on your mind?",
@@ -104,65 +172,53 @@ class _AddpostState extends State<Addpost> {
                 ],
               ),
             ),
-
-            // Image Placeholder / Upload Area
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: GestureDetector(
-                onTap: () {
-                  // Image Picking Logic
-                },
-                child: Container(
-                  width: double.infinity,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    color: isDark ? Colors.grey.shade900 : Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.grey.shade300, width: 1),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.add_photo_alternate_outlined, size: 50, color: primaryColor),
-                      const SizedBox(height: 10),
-                      Text(
-                        "Add Photo/Video",
-                        style: GoogleFonts.roboto(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w500,
+            
+            // Image Preview
+            if (_image != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 250,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                          image: FileImage(_image!),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Positioned(
+                      right: 10,
+                      top: 10,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _image = null;
+                          });
+                        },
+                        child: CircleAvatar(
+                          backgroundColor: Colors.black.withOpacity(0.5),
+                          child: const Icon(Icons.close, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
 
-            const SizedBox(height: 20),
-
-            // Post Options Table
             const Divider(),
             ListTile(
               leading: const Icon(Icons.image, color: Colors.green),
               title: const Text("Photo/Video"),
-              onTap: () {},
-            ),
-            const Divider(height: 1, indent: 70),
-            ListTile(
-              leading: const Icon(Icons.person_add, color: Colors.blue),
-              title: const Text("Tag People"),
-              onTap: () {},
+              onTap: getGalleryImage,
             ),
             const Divider(height: 1, indent: 70),
             ListTile(
               leading: const Icon(Icons.location_on, color: Colors.red),
               title: const Text("Add Location"),
-              onTap: () {},
-            ),
-            const Divider(height: 1, indent: 70),
-            ListTile(
-              leading: const Icon(Icons.emoji_emotions, color: Colors.orange),
-              title: const Text("Feeling/Activity"),
               onTap: () {},
             ),
             const Divider(),
