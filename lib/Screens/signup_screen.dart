@@ -19,8 +19,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final auth = FirebaseAuth.instance;
 
   @override
   void dispose() {
@@ -35,8 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
     });
     auth
         .createUserWithEmailAndPassword(
-          email: emailController.text
-              .trim(), // Added trim() to avoid whitespace errors
+          email: emailController.text.trim(),
           password: passwordController.text.toString(),
         )
         .then((onValue) {
@@ -44,7 +42,7 @@ class _SignupScreenState extends State<SignupScreen> {
             loading = false;
           });
           Errortoast().SuccessToast("Register Successfully");
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),
           );
@@ -59,144 +57,171 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          // Added scroll view to prevent overflow
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Text(
-                  "Welcome",
-                  style: GoogleFonts.lobster(fontSize: 40),
+      backgroundColor: isDark ? Colors.black : Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Unique Header with Gradient (Opposite side of Login)
+            Container(
+              height: size.height * 0.25,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.blueAccent.shade700, Colors.blue],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: const BorderRadius.only(
+                  bottomRight: Radius.circular(80),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  "Register Now",
-                  style: GoogleFonts.lobster(fontSize: 20),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Join Us",
+                    style: GoogleFonts.lobster(
+                      fontSize: 40,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-              Form(
-                key: _formKey, // CRITICAL: Added the form key here
+            ),
+            
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+              child: Form(
+                key: _formKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: TextFormField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          hintText: "Email",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          prefixIcon: const Icon(Icons.email),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter your email";
-                          }
-                          return null;
-                        },
+                    Text(
+                      "Create Account",
+                      style: GoogleFonts.roboto(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? Colors.white : Colors.black87,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        controller: passwordController,
-                        obscureText: true, // Hide password text
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          prefixIcon: const Icon(Icons.password),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter your Password";
-                          }
-                          return null;
-                        },
+                    const SizedBox(height: 10),
+                    Text(
+                      "Sign up to get started",
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 16,
                       ),
                     ),
+                    const SizedBox(height: 30),
+                    
+                    _buildTextField(
+                      controller: emailController,
+                      hint: "Email",
+                      icon: Icons.email_outlined,
+                      isDark: isDark,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) return "Email is required";
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    
+                    _buildTextField(
+                      controller: passwordController,
+                      hint: "Password",
+                      icon: Icons.lock_outline,
+                      isDark: isDark,
+                      isPassword: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) return "Password is required";
+                        return null;
+                      },
+                    ),
+                    
+                    const SizedBox(height: 30),
                     Button(
-                      title: "Register",
-                      loading: loading, // Pass loading state to show spinner
+                      title: "CREATE ACCOUNT",
+                      loading: loading,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           register();
                         }
                       },
                     ),
+                    
+                    const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Already have an account?"),
+                        Text(
+                          "Already have an account? ",
+                          style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
+                        ),
                         InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
-                              ),
+                              MaterialPageRoute(builder: (context) => const LoginScreen()),
                             );
                           },
                           child: const Text(
-                            " Login Now",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 40),
-                    // ... rest of your UI (Dividers and Social Login)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Image.asset("images/google.png", height: 50),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Image.asset(
-                              "images/facebook.png",
-                              height: 50,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Image.asset("images/x.png", height: 50),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 80),
+                    const Center(child: Text("OR SIGN UP WITH")),
+                    const SizedBox(height: 20),
+                    const SocialMediaLogin(),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
-            ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hint,
+    required IconData icon,
+    required bool isDark,
+    bool isPassword = false,
+    String? Function(String?)? validator,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark ? Colors.grey.shade900 : Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
           ),
+        ],
+      ),
+      child: TextFormField(
+        controller: controller,
+        obscureText: isPassword,
+        validator: validator,
+        decoration: InputDecoration(
+          hintText: hint,
+          prefixIcon: Icon(icon, color: Colors.blueAccent),
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         ),
       ),
     );
