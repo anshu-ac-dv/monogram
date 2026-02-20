@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/home_screen.dart';
@@ -19,6 +20,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final auth = FirebaseAuth.instance;
+  final databaseRef = FirebaseDatabase.instance.ref('Users');
 
   @override
   void dispose() {
@@ -36,16 +38,25 @@ class _SignupScreenState extends State<SignupScreen> {
           email: emailController.text.trim(),
           password: passwordController.text.toString(),
         )
-        .then((onValue) {
-          setState(() {
-            loading = false;
-          });
-          Errortoast().SuccessToast("Register Successfully");
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
-            (route) => false,
-          );
+        .then((userCredential) {
+          final user = userCredential.user;
+          if (user != null) {
+            databaseRef.child(user.uid).set({
+              'uid': user.uid,
+              'email': user.email,
+              'name': emailController.text.split('@')[0],
+            }).then((_) {
+              setState(() {
+                loading = false;
+              });
+              Errortoast().SuccessToast("Register Successfully");
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                (route) => false,
+              );
+            });
+          }
         })
         .onError((error, stackTrace) {
           Errortoast().showToast(error.toString());
@@ -162,7 +173,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            // Go back to the existing login screen
                             Navigator.pop(context);
                           },
                           child: const Text(
