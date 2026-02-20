@@ -40,11 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         elevation: 0,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.lightGreenAccent,
+        backgroundColor: Colors.blueAccent,
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomAppBar(
-        color: Colors.lightGreenAccent,
+        color: Colors.blueAccent,
         shape: const CircularNotchedRectangle(),
         notchMargin: 10, // Padding for the FAB notch
         child: SizedBox(
@@ -67,9 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Icon(
                           _currentIndex == 0 ? Icons.home_filled : Icons.home,
-                          color: _currentIndex == 0 ? Colors.black : Colors.grey.shade700,
+                          color: _currentIndex == 0 ? Colors.white : Colors.white70,
                         ),
-                        Text('Home', style: TextStyle(color: _currentIndex == 0 ? Colors.black : Colors.grey.shade700)),
+                        Text('Home', style: TextStyle(color: _currentIndex == 0 ? Colors.white : Colors.white70)),
                       ],
                     ),
                   ),
@@ -85,9 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Icon(
                           Icons.search_rounded,
-                          color: _currentIndex == 1 ? Colors.black : Colors.grey.shade700,
+                          color: _currentIndex == 1 ? Colors.white : Colors.white70,
                         ),
-                        Text('Search', style: TextStyle(color: _currentIndex == 1 ? Colors.black : Colors.grey.shade700)),
+                        Text('Search', style: TextStyle(color: _currentIndex == 1 ? Colors.white : Colors.white70)),
                       ],
                     ),
                   )
@@ -108,9 +108,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Icon(
                          _currentIndex == 2 ? Icons.messenger_rounded : Icons.messenger_outline_rounded,
-                          color: _currentIndex == 2 ? Colors.black : Colors.grey.shade700,
+                          color: _currentIndex == 2 ? Colors.white : Colors.white70,
                         ),
-                        Text('Chat', style: TextStyle(color: _currentIndex == 2 ? Colors.black : Colors.grey.shade700)),
+                        Text('Chat', style: TextStyle(color: _currentIndex == 2 ? Colors.white : Colors.white70)),
                       ],
                     ),
                   ),
@@ -126,9 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Icon(
                           _currentIndex == 3 ? Icons.person_rounded : Icons.person_outline_rounded,
-                          color: _currentIndex == 3 ? Colors.black : Colors.grey.shade700,
+                          color: _currentIndex == 3 ? Colors.white : Colors.white70,
                         ),
-                        Text('Profile', style: TextStyle(color: _currentIndex == 3 ? Colors.black : Colors.grey.shade700)),
+                        Text('Profile', style: TextStyle(color: _currentIndex == 3 ? Colors.white : Colors.white70)),
                       ],
                     ),
                   )
@@ -154,16 +154,16 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 65,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Colors.lightGreenAccent.shade200,
-                Colors.lightGreenAccent,
+                Colors.blue,
+                Colors.blueAccent,
               ],
             ),
           ),
-          child: const Icon(Icons.add_rounded, color: Colors.black, size: 35),
+          child: const Icon(Icons.add_rounded, color: Colors.white, size: 35),
         ),
       ),
     );
