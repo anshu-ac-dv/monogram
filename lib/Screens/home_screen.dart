@@ -28,20 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true, // Allows the FAB to look better with the nav bar
-      appBar: AppBar(
-        title: Text(
-          "Monogram",
-          style: GoogleFonts.lobster(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.blueAccent,
-      ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomAppBar(
         color: Colors.blueAccent,

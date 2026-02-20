@@ -12,7 +12,23 @@ class _WelcomescreenState extends State<Welcomescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).brightness == Brightness.dark ? Colors.black : Colors.white,
+      appBar: AppBar(
+        title: Text(
+          "Monogram",
+          style: GoogleFonts.lobster(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.blueAccent,
+      ),
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.black
+          : Colors.white,
       body: ListView.builder(
         itemCount: 5, // Simulating a feed with 5 posts
         itemBuilder: (context, index) {
@@ -29,7 +45,7 @@ class PostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -43,7 +59,9 @@ class PostWidget extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 18,
-                    backgroundImage: const AssetImage("images/google.png"), // Placeholder
+                    backgroundImage: const AssetImage(
+                      "images/google.png",
+                    ), // Placeholder
                     backgroundColor: Colors.grey.shade300,
                   ),
                   const SizedBox(width: 10),
@@ -114,7 +132,8 @@ class PostWidget extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const TextSpan(
-                      text: "Building something amazing with Flutter and Firebase! 🚀 #monogram #flutterdev",
+                      text:
+                          "Building something amazing with Flutter and Firebase! 🚀 #monogram #flutterdev",
                     ),
                   ],
                 ),
