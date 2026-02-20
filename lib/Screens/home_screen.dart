@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/ProfileScreen.dart';
 import 'package:monogram/Screens/SearchScreen.dart';
 import 'package:monogram/Screens/addPost.dart';
@@ -26,108 +25,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      extendBody: true, // Allows the FAB to look better with the nav bar
+      extendBody: true, // Crucial for the notched FAB look
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomAppBar(
-        color: Colors.blueAccent,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        height: 60,
+        color: isDark ? Colors.grey.shade900 : Colors.white,
         shape: const CircularNotchedRectangle(),
-        notchMargin: 10, // Padding for the FAB notch
-        child: SizedBox(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        _currentIndex = 0;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          _currentIndex == 0 ? Icons.home_filled : Icons.home,
-                          color: _currentIndex == 0 ? Colors.white : Colors.white70,
-                        ),
-                        Text('Home', style: TextStyle(color: _currentIndex == 0 ? Colors.white : Colors.white70)),
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        _currentIndex = 1;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.search_rounded,
-                          color: _currentIndex == 1 ? Colors.white : Colors.white70,
-                        ),
-                        Text('Search', style: TextStyle(color: _currentIndex == 1 ? Colors.white : Colors.white70)),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        _currentIndex = 2;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                         _currentIndex == 2 ? Icons.messenger_rounded : Icons.messenger_outline_rounded,
-                          color: _currentIndex == 2 ? Colors.white : Colors.white70,
-                        ),
-                        Text('Chat', style: TextStyle(color: _currentIndex == 2 ? Colors.white : Colors.white70)),
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                      setState(() {
-                        _currentIndex = 3;
-                      });
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          _currentIndex == 3 ? Icons.person_rounded : Icons.person_outline_rounded,
-                          color: _currentIndex == 3 ? Colors.white : Colors.white70,
-                        ),
-                        Text('Profile', style: TextStyle(color: _currentIndex == 3 ? Colors.white : Colors.white70)),
-                      ],
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
+        notchMargin: 8, // Clean gap between bar and FAB
+        elevation: 10,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            _buildNavItem(0, Icons.home_rounded, Icons.home_outlined),
+            _buildNavItem(1, Icons.search_rounded, Icons.search_outlined),
+            const SizedBox(width: 48), // Spacer for the FAB in the middle
+            _buildNavItem(2, Icons.messenger_rounded, Icons.messenger_outline_rounded),
+            _buildNavItem(3, Icons.person_rounded, Icons.person_outline_rounded),
+          ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
-        elevation: 8,
+        elevation: 5,
         shape: const CircleBorder(),
         onPressed: () {
           Navigator.push(
@@ -136,21 +61,35 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
         child: Container(
-          height: 65,
-          width: 65,
+          height: 60,
+          width: 60,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.blue,
-                Colors.blueAccent,
-              ],
+              colors: [Colors.blue, Colors.blueAccent],
             ),
           ),
-          child: const Icon(Icons.add_rounded, color: Colors.white, size: 35),
+          child: const Icon(Icons.add_rounded, color: Colors.white, size: 32),
         ),
+      ),
+    );
+  }
+
+  // Helper widget for a cleaner, more unique navigation item
+  Widget _buildNavItem(int index, IconData selectedIcon, IconData unselectedIcon) {
+    bool isSelected = _currentIndex == index;
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      icon: Icon(
+        isSelected ? selectedIcon : unselectedIcon,
+        size: 28,
+        color: isSelected ? Colors.blueAccent : Colors.grey.shade500,
       ),
     );
   }
