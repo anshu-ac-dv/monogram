@@ -54,9 +54,9 @@ class _WelcomescreenState extends State<Welcomescreen> {
                       children: [
                         Container(
                           padding: const EdgeInsets.all(3),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            gradient: const LinearGradient(
+                            gradient: LinearGradient(
                               colors: [Colors.blue, Colors.blueAccent],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -65,9 +65,9 @@ class _WelcomescreenState extends State<Welcomescreen> {
                           child: CircleAvatar(
                             radius: 30,
                             backgroundColor: isDark ? Colors.black : Colors.white,
-                            child: CircleAvatar(
+                            child: const CircleAvatar(
                               radius: 27,
-                              backgroundImage: const AssetImage("images/google.png"),
+                              backgroundImage: AssetImage("images/google.png"),
                             ),
                           ),
                         ),
