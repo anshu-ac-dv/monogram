@@ -22,23 +22,70 @@ class _WelcomescreenState extends State<Welcomescreen> {
       body: SafeArea(
         child: Column(
           children: [
+            // Custom App Bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Monogram Feed",
+                    "Monogram",
                     style: GoogleFonts.lobster(
-                      fontSize: 24,
+                      fontSize: 28,
                       color: isDark ? Colors.white : Colors.black87,
                     ),
                   ),
-                  const Icon(Icons.notifications_none_rounded),
+                  const Icon(Icons.notifications_none_rounded, size: 28),
                 ],
               ),
             ),
-            
+
+            // Stories Section (Mocked for UI)
+            SizedBox(
+              height: 100,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 8,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: const LinearGradient(
+                              colors: [Colors.blue, Colors.blueAccent],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: isDark ? Colors.black : Colors.white,
+                            child: CircleAvatar(
+                              radius: 27,
+                              backgroundImage: const AssetImage("images/google.png"),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          index == 0 ? "You" : "User $index",
+                          style: GoogleFonts.roboto(fontSize: 11, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            const Divider(thickness: 0.5),
+
+            // Real-Time Post Feed
             Expanded(
               child: FirebaseAnimatedList(
                 query: ref,
@@ -55,7 +102,7 @@ class _WelcomescreenState extends State<Welcomescreen> {
                 },
               ),
             ),
-            const SizedBox(height: 80), // Space for notched FAB
+            const SizedBox(height: 80), // Padding for the floating nav bar
           ],
         ),
       ),
@@ -80,22 +127,22 @@ class PostWidget extends StatelessWidget {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
         color: isDark ? Colors.grey.shade900 : Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Post Header
+          // Header: Avatar and Username
           Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
@@ -105,7 +152,7 @@ class PostWidget extends StatelessWidget {
                   backgroundColor: Colors.blueAccent.withOpacity(0.1),
                   child: Text(
                     email.isNotEmpty ? email[0].toUpperCase() : "U",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -122,11 +169,13 @@ class PostWidget extends StatelessWidget {
                     ),
                   ],
                 ),
+                const Spacer(),
+                const Icon(Icons.more_horiz, color: Colors.grey),
               ],
             ),
           ),
 
-          // Post Text
+          // Caption Text
           if (title.isNotEmpty)
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
@@ -139,51 +188,63 @@ class PostWidget extends StatelessWidget {
               ),
             ),
 
-          // Post Image
+          // Post Image with loading states
           if (postImage.isNotEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(20),
                 child: Image.network(
                   postImage,
                   width: double.infinity,
-                  height: 300,
+                  height: 350,
                   fit: BoxFit.cover,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Container(
-                      height: 300,
+                      height: 350,
                       color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
-                      child: const Center(child: CircularProgressIndicator()),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      height: 200,
-                      width: double.infinity,
-                      color: Colors.grey.shade300,
-                      child: const Icon(Icons.broken_image, size: 50),
+                      child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
                     );
                   },
                 ),
               ),
             ),
 
-          // Action Buttons
+          // Custom Action Bar
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(icon: const Icon(Icons.favorite_border_rounded), onPressed: () {}),
-                IconButton(icon: const Icon(Icons.chat_bubble_outline_rounded), onPressed: () {}),
-                IconButton(icon: const Icon(Icons.share_outlined), onPressed: () {}),
+                Row(
+                  children: [
+                    _buildActionButton(Icons.favorite_border_rounded, "14"),
+                    const SizedBox(width: 15),
+                    _buildActionButton(Icons.chat_bubble_outline_rounded, "3"),
+                    const SizedBox(width: 15),
+                    _buildActionButton(Icons.send_rounded, ""),
+                  ],
+                ),
+                const Icon(Icons.bookmark_border_rounded, size: 26),
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 5),
         ],
       ),
+    );
+  }
+
+  Widget _buildActionButton(IconData icon, String count) {
+    return Row(
+      children: [
+        Icon(icon, size: 26),
+        if (count.isNotEmpty) ...[
+          const SizedBox(width: 5),
+          Text(count, style: const TextStyle(fontWeight: FontWeight.w500)),
+        ],
+      ],
     );
   }
 }
