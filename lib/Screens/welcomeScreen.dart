@@ -11,7 +11,6 @@ class Welcomescreen extends StatefulWidget {
 }
 
 class _WelcomescreenState extends State<Welcomescreen> {
-  final ref = FirebaseDatabase.instance.ref('Posts');
 
   @override
   Widget build(BuildContext context) {
