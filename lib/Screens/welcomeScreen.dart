@@ -16,7 +16,10 @@ class _WelcomescreenState extends State<Welcomescreen> {
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-
+      appBar: AppBar(
+        backgroundColor: isDark ? Colors.grey.shade900 : Colors.white,
+        elevation: 0,
+      ),
     );
   }
 }
