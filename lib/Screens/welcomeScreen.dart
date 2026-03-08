@@ -16,9 +16,7 @@ class _WelcomescreenState extends State<Welcomescreen> {
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return const Scaffold(
-      body: Center(
-        child: Text("Welcome Screen"),
-      ),
+
     );
   }
 }
