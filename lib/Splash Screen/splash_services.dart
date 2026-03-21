@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:monogram/Screens/home_screen.dart';
-import 'package:monogram/Screens/login_screen.dart';
+import 'package:monogram/Screens/welcomeScreen.dart';
 
 
 class SplashServices {
@@ -22,7 +22,7 @@ class SplashServices {
         const Duration(seconds: 3),
             () => Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          MaterialPageRoute(builder: (context) => const Welcomescreen()),
         ),
       );
     }
