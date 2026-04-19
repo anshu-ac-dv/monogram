@@ -3,6 +3,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/home_screen.dart';
+import 'package:monogram/Screens/login_screen.dart';
+import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Toast/errorToast.dart';
 import 'package:monogram/Widgets/button.dart';
 import 'package:monogram/Widgets/social_media_login.dart';
@@ -50,6 +52,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 loading = false;
               });
               Errortoast().SuccessToast("Register Successfully");
+              if (!mounted) return;
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -173,7 +176,10 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LoginScreen()),
+                            );
                           },
                           child: const Text(
                             "Login",

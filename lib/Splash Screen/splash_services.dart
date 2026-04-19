@@ -22,7 +22,7 @@ class SplashServices {
         const Duration(seconds: 3),
             () => Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const Welcomescreen()),
+          MaterialPageRoute(builder: (context) => const WelcomeScreen()),
         ),
       );
     }

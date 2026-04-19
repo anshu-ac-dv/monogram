@@ -17,6 +17,43 @@ class _SearchscreenState extends State<Searchscreen> {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     Color primaryColor = Colors.blueAccent;
 
-    return const Scaffold();
+    return Scaffold(
+      backgroundColor: isDark ? Colors.black : Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          decoration: BoxDecoration(
+            color: isDark ? Colors.grey.shade900 : Colors.grey.shade100,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: TextField(
+            decoration: InputDecoration(
+              hintText: "Search Monogram",
+              border: InputBorder.none,
+              icon: Icon(Icons.search, color: primaryColor),
+            ),
+          ),
+        ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.search_rounded, size: 80, color: Colors.grey.withOpacity(0.3)),
+            const SizedBox(height: 10),
+            Text(
+              "Find your friends",
+              style: GoogleFonts.roboto(
+                fontSize: 18,
+                color: Colors.grey,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

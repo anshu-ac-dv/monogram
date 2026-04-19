@@ -4,14 +4,14 @@ import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Screens/signup_screen.dart';
 import 'package:monogram/Widgets/button.dart';
 
-class Welcomescreen extends StatefulWidget {
-  const Welcomescreen({super.key});
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key});
 
   @override
-  State<Welcomescreen> createState() => _WelcomescreenState();
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomescreenState extends State<Welcomescreen> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;

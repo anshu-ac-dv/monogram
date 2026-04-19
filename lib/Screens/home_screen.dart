@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final auth = FirebaseAuth.instance;
   int _currentIndex = 0;
   final List<Widget> _screens = [
-    const Welcomescreen(),
+    const Center(child: Text("Home Feed", style: TextStyle(fontSize: 24))),
     const Searchscreen(),
     const Chatscreen(),
     const Profilescreen(),
