@@ -11,100 +11,88 @@
 
 ---
 
-## 💎 The Monogram Experience
+## 📱 App Showcase
 
-### 🪐 Elevate Your Onboarding
-*   **Animated Entry**: Immersive splash and welcome sequences using `TweenAnimationBuilder` for a polished first impression.
-*   **Smart Authentication**: A unified auth flow integrating Firebase Email/Password and Social Login providers.
-*   **Adaptive Theme**: Native support for **Dynamic Dark & Light Modes**, ensuring visual comfort at any hour.
+| Welcome Screen | Home Feed | Create Post |
+| :---: | :---: | :---: |
+| <img src="https://via.placeholder.com/200x400/02569B/FFFFFF?text=Welcome+UI" width="200" /> | <img src="https://via.placeholder.com/200x400/039BE5/FFFFFF?text=Floating+Dock+UI" width="200" /> | <img src="https://via.placeholder.com/200x400/0175C2/FFFFFF?text=Add+Post+UI" width="200" /> |
 
-### 🛸 Modern Dashboard & Navigation
-*   **Floating Dock Architecture**: A bespoke, translucent bottom navigation bar with haptic-like animated feedback.
-*   **Infinite Inspiration**: A reactive Home Feed designed for high engagement.
-*   **Global Search & Discovery**: Real-time user indexing for instant connectivity.
-
-### 📨 Communication & Expression
-*   **Real-Time Messaging**: Optimized chat streams for instantaneous communication.
-*   **Visual Storytelling**: Integrated image picking and high-speed uploads to Firebase Cloud Storage.
-*   **Identity Management**: Personalized profiles with dynamic data fetching and secure account management.
+| Real-time Chat | User Discovery | Profile Settings |
+| :---: | :---: | :---: |
+| <img src="https://via.placeholder.com/200x400/42A5F5/FFFFFF?text=Chat+Stream" width="200" /> | <img src="https://via.placeholder.com/200x400/2196F3/FFFFFF?text=Global+Search" width="200" /> | <img src="https://via.placeholder.com/200x400/1976D2/FFFFFF?text=Profile+UI" width="200" /> |
 
 ---
 
-## ⚙️ Core Engineering & Performance
+## ✨ Key Features
 
-*   **State Management**: Highly optimized `StatefulWidget` implementations with strict lifecycle management to prevent memory leaks.
-*   **Clean Architecture**: Modular screen and widget separation for high maintainability and scalability.
-*   **Async Integrity**: Bulletproof navigation handling using `!mounted` checks to ensure stability across asynchronous gaps.
-*   **Scalable Backend**: Real-time synchronization powered by Firebase Realtime Database and Cloud Firestore.
+### 🪐 Premium Onboarding
+*   **Immersive Entry**: Sleek splash sequences and smooth transitions.
+*   **Secure Auth**: Unified flow supporting Email/Password and **Social Logins (Google/Facebook)**.
+*   **Dynamic Theming**: Native support for **Adaptive Dark & Light Modes**.
+
+### 🛸 Modern Navigation & UI
+*   **Floating Dock Architecture**: A bespoke, translucent navigation bar with haptic-inspired feedback.
+*   **Glassmorphism**: Elegant UI elements with frosted glass effects and refined shadows.
+*   **Material 3 Ready**: Fully optimized for the latest Material Design standards.
+
+### 📨 Express & Connect
+*   **Visual Storytelling**: Seamlessly share text and images using **Firebase Cloud Storage**.
+*   **Real-Time Streams**: Instant messaging and live feed updates via **Firestore/Realtime DB**.
+*   **Global Discovery**: Optimized search engine to find and connect with users instantly.
 
 ---
 
 ## 🛠️ Technical Stack
 
-- **Frontend**: Flutter (Stable)
-- **Language**: Dart (Sound Null Safety)
-- **Backend**: Firebase Ecosystem
-  - *Authentication*: Secure Multi-provider Auth.
-  - *Database*: NoSQL Realtime Data Sync.
-  - *Storage*: High-performance Media Cloud.
-- **UI Architecture**: Custom Widgets, Glassmorphism, and Google Fonts (Lobster/Roboto).
+- **Frontend**: [Flutter](https://flutter.dev) (Stable Channel)
+- **Language**: [Dart](https://dart.dev) (Sound Null Safety)
+- **Backend**: [Firebase Ecosystem](https://firebase.google.com/)
+  - **Auth**: Multi-provider Authentication.
+  - **Database**: Cloud Firestore & Realtime Database.
+  - **Storage**: Firebase Cloud Storage for high-speed media.
+- **UI Architecture**: Custom Widgets, Google Fonts (Roboto), and Animation Controllers.
 
 ---
 
-## 🚀 Deployment & Installation
+## 🚀 Getting Started
 
 ### Prerequisites
 - Flutter SDK (Latest Stable)
-- Android Studio / Xcode
-- Firebase Project Setup
+- Android Studio / VS Code
+- Firebase Project
 
-### Setup Guide
+### Installation
 
-1.  **Clone the Repository**
-    ```bash
-    git clone https://github.com/your-username/monogram.git
-    cd monogram
-    ```
+1. **Clone the Project**
+   ```bash
+   git clone https://github.com/your-username/monogram.git
+   cd monogram
+   ```
 
-2.  **Dependency Synchronization**
-    ```bash
-    flutter pub get
-    ```
+2. **Setup Dependencies**
+   ```bash
+   flutter pub get
+   ```
 
-3.  **Environment Configuration**
-    - Add your `google-services.json` (Android) or `GoogleService-Info.plist` (iOS).
-    - Ensure Firebase core is initialized in `main.dart`.
+3. **Configure Firebase**
+   - Place your `google-services.json` in `android/app/`.
+   - Place your `GoogleService-Info.plist` in `ios/Runner/`.
 
-4.  **Branding Generation**
-    ```bash
-    flutter pub run flutter_launcher_icons
-    ```
-
-5.  **Launch**
-    ```bash
-    flutter run
-    ```
+4. **Run the App**
+   ```bash
+   flutter run
+   ```
 
 ---
 
-## 📸 Interface Preview
+## 🗺️ Roadmap
 
-| Onboarding Flow | Social Feed | Dynamic Profile |
-| :---: | :---: | :---: |
-| <img src="https://via.placeholder.com/200x400?text=Animated+Welcome" width="200" /> | <img src="https://via.placeholder.com/200x400?text=Floating+Dock+UI" width="200" /> | <img src="https://via.placeholder.com/200x400?text=Profile+Management" width="200" /> |
-
----
-
-## 🗺️ Roadmap & Future Vision
-
-- [ ] **Push Engine**: FCM integration for real-time interactions.
-- [ ] **Video Core**: Support for short-form video content.
-- [ ] **AI Search**: Intelligent content and user discovery algorithms.
-- [ ] **Cross-Platform Plus**: Enhanced optimization for Web and Desktop.
-
----
+- [x] **V1.0**: Core Social Features & Firebase Integration.
+- [ ] **V1.1**: Push Notifications (FCM).
+- [ ] **V1.2**: Video Stories & Short Reels.
+- [ ] **V1.3**: AI-driven Content Recommendations.
 
 <p align="center">
-  Built with precision by the Monogram Team.<br>
+  Built with ❤️ by the Monogram Team.<br>
   <i>"Redefining social connectivity, one pixel at a time."</i>
 </p>
