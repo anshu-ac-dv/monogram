@@ -4,7 +4,6 @@ import 'package:monogram/Screens/ProfileScreen.dart';
 import 'package:monogram/Screens/SearchScreen.dart';
 import 'package:monogram/Screens/addPost.dart';
 import 'package:monogram/Screens/chatScreen.dart';
-import 'package:monogram/Screens/welcomeScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
