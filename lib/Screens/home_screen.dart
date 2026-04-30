@@ -178,7 +178,7 @@ class HomeFeed extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               itemCount: 10,
               itemBuilder: (context, index) {
-                return _buildStoryItem(index == 0, isDark);
+                return _buildStoryItem(index, isDark);
               },
             ),
           ),
@@ -199,7 +199,8 @@ class HomeFeed extends StatelessWidget {
     );
   }
 
-  Widget _buildStoryItem(bool isMe, bool isDark) {
+  Widget _buildStoryItem(int index, bool isDark) {
+    bool isMe = index == 0;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Column(
@@ -211,7 +212,7 @@ class HomeFeed extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
-                    colors: isMe ? [Colors.grey, Colors.grey] : [Colors.purple, Colors.orange, Colors.yellow],
+                    colors: isMe ? [Colors.grey.shade300, Colors.grey.shade300] : [Colors.purple, Colors.orange, Colors.yellow],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                   ),
@@ -245,7 +246,7 @@ class HomeFeed extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            isMe ? "Your Story" : "User $isMe",
+            isMe ? "Your Story" : "User $index",
             style: TextStyle(
               fontSize: 11,
               color: isDark ? Colors.white70 : Colors.black87,
