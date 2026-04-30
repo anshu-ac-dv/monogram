@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Screens/signup_screen.dart';
 import 'package:monogram/Widgets/button.dart';
+import 'package:monogram/Widgets/social_media_login.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -18,151 +20,129 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     return Scaffold(
       backgroundColor: isDark ? Colors.black : Colors.white,
-      body: Stack(
-        children: [
-          // Background decorative elements
-          Positioned(
-            top: -size.width * 0.2,
-            right: -size.width * 0.2,
-            child: Container(
-              width: size.width * 0.7,
-              height: size.width * 0.7,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.blueAccent.withOpacity(0.05),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -size.width * 0.3,
-            left: -size.width * 0.3,
-            child: Container(
-              width: size.width * 0.8,
-              height: size.width * 0.8,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.blueAccent.withOpacity(0.05),
-              ),
-            ),
-          ),
-          
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            children: [
+              const Spacer(flex: 3),
+              
+              // App Branding
+              Column(
                 children: [
-                  const Spacer(flex: 2),
-                  
-                  // Animated-like Logo Container
-                  TweenAnimationBuilder(
-                    duration: const Duration(seconds: 1),
-                    tween: Tween<double>(begin: 0, end: 1),
-                    builder: (context, double value, child) {
-                      return Opacity(
-                        opacity: value,
-                        child: Transform.scale(
-                          scale: value,
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: isDark ? Colors.grey[900] : Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.blueAccent.withOpacity(0.2),
-                            blurRadius: 30,
-                            spreadRadius: 5,
-                          ),
-                        ],
+                  Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.blue, Colors.blueAccent.shade700],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Colors.blue, Colors.blueAccent.shade700],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          shape: BoxShape.circle,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blueAccent.withOpacity(0.3),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
                         ),
-                        child: const Icon(
-                          Icons.blur_on,
-                          size: 70,
-                          color: Colors.white,
-                        ),
-                      ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.blur_on,
+                      size: 70,
+                      color: Colors.white,
                     ),
                   ),
-                  
-                  const SizedBox(height: 40),
-                  
-                  // Text Content
+                  const SizedBox(height: 20),
                   Text(
                     "Monogram",
                     style: GoogleFonts.lobster(
-                      fontSize: 56,
+                      fontSize: 50,
                       color: isDark ? Colors.white : Colors.blueAccent.shade700,
-                      letterSpacing: 1.5,
                     ),
                   ),
-                  
                   const SizedBox(height: 10),
-                  
                   Text(
-                    "Connect • Share • Inspire",
-                    style: GoogleFonts.roboto(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.blueAccent.withOpacity(0.8),
-                      letterSpacing: 2,
-                    ),
-                  ),
-                  
-                  const Spacer(flex: 1),
-                  
-                  Text(
-                    "The simplest way to stay connected with your world. Join the community today.",
+                    "Connect with friends and the world around you.",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.roboto(
                       fontSize: 16,
                       color: isDark ? Colors.white70 : Colors.black54,
-                      height: 1.6,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
-                  
-                  const Spacer(flex: 2),
-                  
-                  // Bottom Buttons Section
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Button(
-                          title: "GET STARTED",
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const SignupScreen()),
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                    ],
-                  ),
-                  
-                  const SizedBox(height: 30),
                 ],
               ),
-            ),
+              
+              const Spacer(flex: 2),
+              
+              // Actions Section
+              Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Button(
+                      title: "Create New Account",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const SignupScreen()),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Row(
+                    children: [
+                      Expanded(child: Divider()),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text("OR", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+                      ),
+                      Expanded(child: Divider()),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const SocialMediaLogin(),
+                ],
+              ),
+              
+              const Spacer(flex: 2),
+              
+              // Footer
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account? ",
+                      style: TextStyle(
+                        color: isDark ? Colors.white60 : Colors.black54,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginScreen()),
+                        );
+                      },
+                      child: Text(
+                        "Log In",
+                        style: TextStyle(
+                          color: Colors.blueAccent.shade700,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
