@@ -16,133 +16,155 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
-    final size = MediaQuery.of(context).size;
-
+    
     return Scaffold(
-      backgroundColor: isDark ? Colors.black : Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            children: [
-              const Spacer(flex: 3),
-              
-              // App Branding
-              Column(
-                children: [
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.blue, Colors.blueAccent.shade700],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.blueAccent.withOpacity(0.3),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.blur_on,
-                      size: 70,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    "Monogram",
-                    style: GoogleFonts.lobster(
-                      fontSize: 50,
-                      color: isDark ? Colors.white : Colors.blueAccent.shade700,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Connect with friends and the world around you.",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.roboto(
-                      fontSize: 16,
-                      color: isDark ? Colors.white70 : Colors.black54,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
+      backgroundColor: isDark ? const Color(0xFF0F0F0F) : Colors.white,
+      body: Stack(
+        children: [
+          // Background Decoration
+          Positioned(
+            top: -100,
+            right: -100,
+            child: Container(
+              height: 300,
+              width: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blueAccent.withOpacity(0.1),
               ),
-              
-              const Spacer(flex: 2),
-              
-              // Actions Section
-              Column(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: Button(
-                      title: "Create New Account",
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const SignupScreen()),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Row(
+            ),
+          ),
+          
+          SafeArea(
+            child: Column(
+              children: [
+                const Spacer(),
+                
+                // Brand Section
+                Center(
+                  child: Column(
                     children: [
-                      Expanded(child: Divider()),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text("OR", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+                      Hero(
+                        tag: 'logo',
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.blueAccent.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Icon(
+                            Icons.auto_awesome_mosaic_rounded,
+                            size: 80,
+                            color: Colors.blueAccent,
+                          ),
+                        ),
                       ),
-                      Expanded(child: Divider()),
+                      const SizedBox(height: 25),
+                      Text(
+                        "MONOGRAM",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 4,
+                          color: isDark ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "The world is waiting for you.",
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 20),
-                  const SocialMediaLogin(),
-                ],
-              ),
-              
-              const Spacer(flex: 2),
-              
-              // Footer
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already have an account? ",
-                      style: TextStyle(
-                        color: isDark ? Colors.white60 : Colors.black54,
-                      ),
+                ),
+                
+                const Spacer(),
+                
+                // Interaction Area
+                Container(
+                  padding: const EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                    color: isDark ? const Color(0xFF1A1A1A) : Colors.grey.shade50,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const LoginScreen()),
-                        );
-                      },
-                      child: Text(
-                        "Log In",
-                        style: TextStyle(
-                          color: Colors.blueAccent.shade700,
-                          fontWeight: FontWeight.bold,
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        height: 60,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const SignupScreen()),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: const Text(
+                            "Get Started",
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Have an account? ",
+                            style: TextStyle(color: Colors.grey.shade600),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                              );
+                            },
+                            child: const Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 30),
+                      const Row(
+                        children: [
+                          Expanded(child: Divider()),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            child: Text("Quick Connect", style: TextStyle(color: Colors.grey, fontSize: 12)),
+                          ),
+                          Expanded(child: Divider()),
+                        ],
+                      ),
+                      const SizedBox(height: 25),
+                      const SocialMediaLogin(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

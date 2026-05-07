@@ -15,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final auth = FirebaseAuth.instance;
   int _currentIndex = 0;
   
   late final List<Widget> _screens;
@@ -36,102 +35,65 @@ class _HomeScreenState extends State<HomeScreen> {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      extendBody: true,
       body: _screens[_currentIndex],
-      bottomNavigationBar: _buildFloatingDock(isDark),
+      bottomNavigationBar: _buildBottomNav(isDark),
     );
   }
 
-  Widget _buildFloatingDock(bool isDark) {
+  Widget _buildBottomNav(bool isDark) {
     return Container(
-      height: 70,
-      margin: const EdgeInsets.fromLTRB(20, 0, 20, 25),
+      height: 85,
       decoration: BoxDecoration(
-        color: isDark ? Colors.black.withOpacity(0.8) : Colors.white.withOpacity(0.8),
-        borderRadius: BorderRadius.circular(35),
-        border: Border.all(
-          color: isDark ? Colors.white10 : Colors.black12,
-          width: 0.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+        color: isDark ? const Color(0xFF1A1A1A) : Colors.white,
+        border: Border(
+          top: BorderSide(
+            color: isDark ? Colors.white10 : Colors.black.withOpacity(0.05),
+            width: 1,
           ),
-        ],
+        ),
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(35),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNavItem(0, Icons.home_rounded, Icons.home_outlined),
-                _buildNavItem(1, Icons.search_rounded, Icons.search_outlined),
-
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Addpost()),
-                    );
-                  },
-                  child: Container(
-                    height: 52,
-                    width: 52,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: const LinearGradient(
-                        colors: [Colors.blue, Colors.blueAccent],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.blueAccent.withOpacity(0.3),
-                          blurRadius: 12,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(Icons.add_rounded, color: Colors.white, size: 32),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildNavItem(0, Icons.grid_view_rounded),
+          _buildNavItem(1, Icons.search_rounded),
+          
+          // Add Button
+          GestureDetector(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Addpost())),
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: Colors.blueAccent,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blueAccent.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
                   ),
-                ),
-
-                _buildNavItem(2, Icons.messenger_rounded, Icons.messenger_outline_rounded),
-                _buildNavItem(3, Icons.person_rounded, Icons.person_outline_rounded),
-              ],
+                ],
+              ),
+              child: const Icon(Icons.add, color: Colors.white, size: 30),
             ),
           ),
-        ),
+          
+          _buildNavItem(2, Icons.chat_bubble_outline_rounded),
+          _buildNavItem(3, Icons.person_outline_rounded),
+        ],
       ),
     );
   }
 
-  Widget _buildNavItem(int index, IconData selectedIcon, IconData unselectedIcon) {
+  Widget _buildNavItem(int index, IconData icon) {
     bool isSelected = _currentIndex == index;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.blueAccent.withOpacity(0.1) : Colors.transparent,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          isSelected ? selectedIcon : unselectedIcon,
-          size: 28,
-          color: isSelected ? Colors.blueAccent : Colors.grey.shade500,
-        ),
+    return IconButton(
+      onPressed: () => setState(() => _currentIndex = index),
+      icon: Icon(
+        icon,
+        size: 28,
+        color: isSelected ? Colors.blueAccent : Colors.grey.shade400,
       ),
     );
   }
@@ -145,188 +107,122 @@ class HomeFeed extends StatelessWidget {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? Colors.black : Colors.white,
+      backgroundColor: isDark ? const Color(0xFF0F0F0F) : Colors.white,
       appBar: AppBar(
-        backgroundColor: isDark ? Colors.black : Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "Monogram",
-          style: GoogleFonts.lobster(
-            fontSize: 28,
-            color: isDark ? Colors.white : Colors.blueAccent,
+          "MONOGRAM",
+          style: GoogleFonts.montserrat(
+            fontWeight: FontWeight.w900,
+            fontSize: 22,
+            letterSpacing: 2,
+            color: isDark ? Colors.white : Colors.black,
           ),
         ),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.favorite_border_rounded, color: isDark ? Colors.white : Colors.black87),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.send_rounded, color: isDark ? Colors.white : Colors.black87),
+            icon: Icon(Icons.notifications_none_rounded, color: isDark ? Colors.white : Colors.black),
           ),
         ],
       ),
       body: ListView(
-        physics: const BouncingScrollPhysics(),
         children: [
           // Stories Section
-          SizedBox(
-            height: 110,
+          Container(
+            height: 100,
+            margin: const EdgeInsets.symmetric(vertical: 10),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               itemCount: 10,
               itemBuilder: (context, index) {
                 return _buildStoryItem(index, isDark);
               },
             ),
           ),
-          const Divider(height: 1, thickness: 0.2),
 
-          // Posts Feed
+          // Feed
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 5,
-            itemBuilder: (context, index) {
-              return _buildPostCard(isDark);
-            },
+            itemBuilder: (context, index) => _buildPost(isDark),
           ),
-          const SizedBox(height: 100), // Space for floating dock
         ],
       ),
     );
   }
 
   Widget _buildStoryItem(int index, bool isDark) {
-    bool isMe = index == 0;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: const EdgeInsets.only(right: 15),
       child: Column(
         children: [
-          Stack(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    colors: isMe ? [Colors.grey.shade300, Colors.grey.shade300] : [Colors.purple, Colors.orange, Colors.yellow],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                  ),
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    color: isDark ? Colors.black : Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage("images/google.png"),
-                  ),
-                ),
-              ),
-              if (isMe)
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blueAccent,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: isDark ? Colors.black : Colors.white, width: 2),
-                    ),
-                    child: const Icon(Icons.add, size: 18, color: Colors.white),
-                  ),
-                ),
-            ],
+          Container(
+            padding: const EdgeInsets.all(3),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.blueAccent, width: 2),
+            ),
+            child: const CircleAvatar(
+              radius: 28,
+              backgroundImage: AssetImage("images/google.png"),
+            ),
           ),
           const SizedBox(height: 5),
           Text(
-            isMe ? "Your Story" : "User $index",
-            style: TextStyle(
-              fontSize: 11,
-              color: isDark ? Colors.white70 : Colors.black87,
-            ),
+            index == 0 ? "You" : "User $index",
+            style: TextStyle(fontSize: 10, color: isDark ? Colors.white70 : Colors.black54),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildPostCard(bool isDark) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Post Header
-        ListTile(
-          leading: const CircleAvatar(
-            backgroundImage: AssetImage("images/google.png"),
+  Widget _buildPost(bool isDark) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1A1A1A) : Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Column(
+        children: [
+          ListTile(
+            leading: const CircleAvatar(backgroundImage: AssetImage("images/google.png")),
+            title: const Text("Alex Johnson", style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: const Text("New York, USA", style: TextStyle(fontSize: 12)),
+            trailing: const Icon(Icons.more_vert),
           ),
-          title: const Text("Username", style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: const Text("Location, Country"),
-          trailing: IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz)),
-        ),
-
-        // Post Image
-        Container(
-          height: 400,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade200,
-            image: const DecorationImage(
-              image: AssetImage("images/google.png"), // Placeholder
-              fit: BoxFit.cover,
+          Container(
+            height: 300,
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              image: const DecorationImage(image: AssetImage("images/google.png"), fit: BoxFit.cover),
             ),
           ),
-        ),
-
-        // Post Actions
-        Row(
-          children: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border_rounded)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.chat_bubble_outline_rounded)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.send_rounded)),
-            const Spacer(),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.bookmark_border_rounded)),
-          ],
-        ),
-
-        // Likes & Caption
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text("1,234 likes", style: TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 5),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(color: isDark ? Colors.white : Colors.black),
-                  children: const [
-                    TextSpan(text: "Username ", style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: "This is a beautiful day for developing Monogram! #flutter #ui"),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                "View all 45 comments",
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 14),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                "2 hours ago",
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: Row(
+              children: [
+                const Icon(Icons.favorite_rounded, color: Colors.redAccent),
+                const SizedBox(width: 5),
+                const Text("1.2k", style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(width: 20),
+                const Icon(Icons.chat_bubble_outline_rounded, color: Colors.blueAccent),
+                const SizedBox(width: 5),
+                const Text("45", style: TextStyle(fontWeight: FontWeight.bold)),
+                const Spacer(),
+                const Icon(Icons.bookmark_border_rounded),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 15),
-      ],
+        ],
+      ),
     );
   }
 }
