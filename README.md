@@ -70,5 +70,5 @@ This project highlights a commitment to:
 ---
 
 <p align="center">
-  Built with ✨ and 💙 by <b>Anshuman</b>
+  Built with ✨ and 💙 by <b>Anshu Kumar</b>
 </p>
