@@ -41,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {
             loading = false;
           });
+          if (!mounted) return;
           // Clear stack so back button doesn't return to Login
           Navigator.pushAndRemoveUntil(
             context,
@@ -52,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {
             loading = false;
           });
-          Errortoast().showToast(error.toString());
+          ErrorToast().showToast(error.toString());
         });
   }
 
@@ -217,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/home_screen.dart';
 import 'package:monogram/Screens/login_screen.dart';
-import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Toast/errorToast.dart';
 import 'package:monogram/Widgets/button.dart';
 import 'package:monogram/Widgets/social_media_login.dart';
@@ -51,7 +50,7 @@ class _SignupScreenState extends State<SignupScreen> {
               setState(() {
                 loading = false;
               });
-              Errortoast().SuccessToast("Register Successfully");
+              ErrorToast().successToast("Register Successfully");
               if (!mounted) return;
               Navigator.pushAndRemoveUntil(
                 context,
@@ -62,7 +61,7 @@ class _SignupScreenState extends State<SignupScreen> {
           }
         })
         .onError((error, stackTrace) {
-          Errortoast().showToast(error.toString());
+          ErrorToast().showToast(error.toString());
           setState(() {
             loading = false;
           });
@@ -220,7 +219,7 @@ class _SignupScreenState extends State<SignupScreen> {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),

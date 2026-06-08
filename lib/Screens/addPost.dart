@@ -7,14 +7,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:monogram/Toast/errorToast.dart';
 
-class Addpost extends StatefulWidget {
-  const Addpost({super.key});
+class AddPost extends StatefulWidget {
+  const AddPost({super.key});
 
   @override
-  State<Addpost> createState() => _AddpostState();
+  State<AddPost> createState() => _AddPostState();
 }
 
-class _AddpostState extends State<Addpost> {
+class _AddPostState extends State<AddPost> {
   final titleController = TextEditingController();
   bool loading = false;
   final databaseRef = FirebaseDatabase.instance.ref('Posts');
@@ -36,14 +36,14 @@ class _AddpostState extends State<Addpost> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
-        print("no image picked");
+        debugPrint("no image picked");
       }
     });
   }
 
   void uploadPost() async {
     if (titleController.text.isEmpty && _image == null) {
-      Errortoast().showToast("Please enter text or select an image");
+      ErrorToast().showToast("Please enter text or select an image");
       return;
     }
 
@@ -56,7 +56,7 @@ class _AddpostState extends State<Addpost> {
 
     try {
       if (_image != null) {
-        firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref('/monogram/' + id);
+        firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref('/monogram/$id');
         firebase_storage.UploadTask uploadTask = ref.putFile(_image!.absolute);
         await Future.value(uploadTask);
         imageUrl = await ref.getDownloadURL();
@@ -74,13 +74,14 @@ class _AddpostState extends State<Addpost> {
       setState(() {
         loading = false;
       });
-      Errortoast().SuccessToast("Post Uploaded Successfully");
+      ErrorToast().successToast("Post Uploaded Successfully");
+      if (!mounted) return;
       Navigator.pop(context);
     } catch (e) {
       setState(() {
         loading = false;
       });
-      Errortoast().showToast(e.toString());
+      ErrorToast().showToast(e.toString());
     }
   }
 
@@ -200,7 +201,7 @@ class _AddpostState extends State<Addpost> {
                           });
                         },
                         child: CircleAvatar(
-                          backgroundColor: Colors.black.withOpacity(0.5),
+                          backgroundColor: Colors.black.withValues(alpha: 0.5),
                           child: const Icon(Icons.close, color: Colors.white),
                         ),
                       ),

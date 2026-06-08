@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:monogram/Splash%20Screen/splash_services.dart';
+import 'splash_services.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.5, curve: Curves.outBack),
+        curve: const Interval(0.0, 0.5, curve: Curves.easeOutBack),
       ),
     );
 
@@ -65,12 +65,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           Positioned(
             top: -100,
             right: -50,
-            child: _buildBlurCircle(300, Colors.blueAccent.withOpacity(0.2)),
+            child: _buildBlurCircle(300, Colors.blueAccent.withValues(alpha: 0.2)),
           ),
           Positioned(
             bottom: -50,
             left: -50,
-            child: _buildBlurCircle(250, Colors.blue.withOpacity(0.15)),
+            child: _buildBlurCircle(250, Colors.blue.withValues(alpha: 0.15)),
           ),
           
           SafeArea(
@@ -81,42 +81,36 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   const Spacer(flex: 3),
                   
                   // Animated Logo Section
-                  AnimatedBuilder(
-                    animation: _controller,
-                    builder: (context, child) {
-                      return FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: ScaleTransition(
-                          scale: _scaleAnimation,
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(25),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.05),
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.1),
-                          width: 1.5,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.blueAccent.withOpacity(0.1),
-                            blurRadius: 40,
-                            spreadRadius: 5,
+                  FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: ScaleTransition(
+                      scale: _scaleAnimation,
+                      child: Container(
+                        padding: const EdgeInsets.all(25),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.05),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.1),
+                            width: 1.5,
                           ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: const Icon(
-                            Icons.auto_awesome, // More modern unique icon
-                            size: 80,
-                            color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.blueAccent.withValues(alpha: 0.1),
+                              blurRadius: 40,
+                              spreadRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: const Icon(
+                              Icons.auto_awesome, // More modern unique icon
+                              size: 80,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -147,7 +141,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white.withOpacity(0.5),
+                              color: Colors.white.withValues(alpha: 0.5),
                               letterSpacing: 4,
                             ),
                           ),
@@ -177,7 +171,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                           style: GoogleFonts.inter(
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withValues(alpha: 0.3),
                             letterSpacing: 2,
                           ),
                         ),
@@ -187,7 +181,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                             letterSpacing: 3,
                           ),
                         ),
@@ -213,7 +207,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         gradient: RadialGradient(
           colors: [
             color,
-            color.withOpacity(0.0),
+            color.withValues(alpha: 0.0),
           ],
         ),
       ),

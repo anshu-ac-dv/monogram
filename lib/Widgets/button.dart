@@ -30,7 +30,7 @@ class Button extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
-                color: Colors.blueAccent.withOpacity(0.3),
+                color: Colors.blueAccent.withValues(alpha: 0.3),
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),

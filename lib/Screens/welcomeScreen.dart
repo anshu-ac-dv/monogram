@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Screens/signup_screen.dart';
-import 'package:monogram/Widgets/button.dart';
 import 'package:monogram/Widgets/social_media_login.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -30,7 +29,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               width: 300,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.blueAccent.withOpacity(0.1),
+                color: Colors.blueAccent.withValues(alpha: 0.1),
               ),
             ),
           ),
@@ -49,7 +48,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: Colors.blueAccent.withOpacity(0.1),
+                            color: Colors.blueAccent.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: const Icon(

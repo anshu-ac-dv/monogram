@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class Errortoast {
+class ErrorToast {
   void showToast(String message) {
     Fluttertoast.showToast(
       msg: message,
@@ -14,7 +14,7 @@ class Errortoast {
     );
   }
 
-  void SuccessToast(String message) {
+  void successToast(String message) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,

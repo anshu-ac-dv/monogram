@@ -4,14 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Toast/errorToast.dart';
 
-class Profilescreen extends StatefulWidget {
-  const Profilescreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  State<Profilescreen> createState() => _ProfilescreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfilescreenState extends State<Profilescreen> with SingleTickerProviderStateMixin {
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
   final auth = FirebaseAuth.instance;
   final User? user = FirebaseAuth.instance.currentUser;
   late TabController _tabController;
@@ -50,13 +50,14 @@ class _ProfilescreenState extends State<Profilescreen> with SingleTickerProvider
           IconButton(
             onPressed: () {
               auth.signOut().then((value) {
+                if (!mounted) return;
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
                   (route) => false,
                 );
               }).onError((error, stackTrace) {
-                Errortoast().showToast(error.toString());
+                ErrorToast().showToast(error.toString());
               });
             },
             icon: const Icon(Icons.logout_rounded, color: Colors.redAccent),
@@ -96,7 +97,7 @@ class _ProfilescreenState extends State<Profilescreen> with SingleTickerProvider
                                 ),
                                 child: CircleAvatar(
                                   radius: 40,
-                                  backgroundColor: primaryColor.withOpacity(0.1),
+                                  backgroundColor: primaryColor.withValues(alpha: 0.1),
                                   backgroundImage: const AssetImage("images/google.png"),
                                 ),
                               ),

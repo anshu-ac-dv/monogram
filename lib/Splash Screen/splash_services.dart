@@ -12,18 +12,24 @@ class SplashServices {
     if (user != null) {
       Timer(
         const Duration(seconds: 3),
-            () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-        ),
+        () {
+          if (!context.mounted) return;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+          );
+        },
       );
     } else {
       Timer(
         const Duration(seconds: 3),
-            () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-        ),
+        () {
+          if (!context.mounted) return;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+          );
+        },
       );
     }
   }

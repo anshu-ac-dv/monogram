@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Chatscreen extends StatefulWidget {
-  const Chatscreen({super.key});
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
 
   @override
-  State<Chatscreen> createState() => _ChatscreenState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatscreenState extends State<Chatscreen> {
+class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -74,7 +74,7 @@ class _ChatscreenState extends State<Chatscreen> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: isDark ? Colors.grey.shade900.withOpacity(0.5) : Colors.white,
+                color: isDark ? Colors.grey.shade900.withValues(alpha: 0.5) : Colors.white,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
@@ -104,7 +104,7 @@ class _ChatscreenState extends State<Chatscreen> {
             children: [
               CircleAvatar(
                 radius: 30,
-                backgroundColor: Colors.blueAccent.withOpacity(0.1),
+                backgroundColor: Colors.blueAccent.withValues(alpha: 0.1),
                 backgroundImage: const AssetImage("images/google.png"),
               ),
               Positioned(
@@ -141,7 +141,7 @@ class _ChatscreenState extends State<Chatscreen> {
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       leading: CircleAvatar(
         radius: 28,
-        backgroundColor: primaryColor.withOpacity(0.1),
+        backgroundColor: primaryColor.withValues(alpha: 0.1),
         backgroundImage: const AssetImage("images/google.png"),
       ),
       title: Text(

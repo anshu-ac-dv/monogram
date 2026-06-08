@@ -1,5 +1,3 @@
-import 'dart:ui';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/ProfileScreen.dart';
@@ -24,9 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _screens = [
       const HomeFeed(),
-      const Searchscreen(),
-      const Chatscreen(),
-      const Profilescreen(),
+      const SearchScreen(),
+      const ChatScreen(),
+      const ProfileScreen(),
     ];
   }
 
@@ -47,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: isDark ? const Color(0xFF1A1A1A) : Colors.white,
         border: Border(
           top: BorderSide(
-            color: isDark ? Colors.white10 : Colors.black.withOpacity(0.05),
+            color: isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.05),
             width: 1,
           ),
         ),
@@ -60,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           
           // Add Button
           GestureDetector(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Addpost())),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AddPost())),
             child: Container(
               height: 50,
               width: 50,
@@ -69,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.blueAccent.withOpacity(0.3),
+                    color: Colors.blueAccent.withValues(alpha: 0.3),
                     blurRadius: 10,
                     offset: const Offset(0, 5),
                   ),
@@ -190,11 +188,11 @@ class HomeFeed extends StatelessWidget {
       ),
       child: Column(
         children: [
-          ListTile(
-            leading: const CircleAvatar(backgroundImage: AssetImage("images/google.png")),
-            title: const Text("Alex Johnson", style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: const Text("New York, USA", style: TextStyle(fontSize: 12)),
-            trailing: const Icon(Icons.more_vert),
+          const ListTile(
+            leading: CircleAvatar(backgroundImage: AssetImage("images/google.png")),
+            title: Text("Alex Johnson", style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text("New York, USA", style: TextStyle(fontSize: 12)),
+            trailing: Icon(Icons.more_vert),
           ),
           Container(
             height: 300,
@@ -205,19 +203,19 @@ class HomeFeed extends StatelessWidget {
               image: const DecorationImage(image: AssetImage("images/google.png"), fit: BoxFit.cover),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(15),
+          const Padding(
+            padding: EdgeInsets.all(15),
             child: Row(
               children: [
-                const Icon(Icons.favorite_rounded, color: Colors.redAccent),
-                const SizedBox(width: 5),
-                const Text("1.2k", style: TextStyle(fontWeight: FontWeight.bold)),
-                const SizedBox(width: 20),
-                const Icon(Icons.chat_bubble_outline_rounded, color: Colors.blueAccent),
-                const SizedBox(width: 5),
-                const Text("45", style: TextStyle(fontWeight: FontWeight.bold)),
-                const Spacer(),
-                const Icon(Icons.bookmark_border_rounded),
+                Icon(Icons.favorite_rounded, color: Colors.redAccent),
+                SizedBox(width: 5),
+                Text("1.2k", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(width: 20),
+                Icon(Icons.chat_bubble_outline_rounded, color: Colors.blueAccent),
+                SizedBox(width: 5),
+                Text("45", style: TextStyle(fontWeight: FontWeight.bold)),
+                Spacer(),
+                Icon(Icons.bookmark_border_rounded),
               ],
             ),
           ),

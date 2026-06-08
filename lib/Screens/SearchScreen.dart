@@ -1,16 +1,14 @@
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Searchscreen extends StatefulWidget {
-  const Searchscreen({super.key});
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
 
   @override
-  State<Searchscreen> createState() => _SearchscreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _SearchscreenState extends State<Searchscreen> {
+class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class _SearchscreenState extends State<Searchscreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.search_rounded, size: 80, color: Colors.grey.withOpacity(0.3)),
+            Icon(Icons.search_rounded, size: 80, color: Colors.grey.withValues(alpha: 0.3)),
             const SizedBox(height: 10),
             Text(
               "Find your friends",
