@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Screens/signup_screen.dart';
+import 'package:monogram/Widgets/monogram_logo.dart';
 import 'package:monogram/Widgets/social_media_login.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -43,43 +44,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 Center(
                   child: Column(
                     children: [
-                      Hero(
+                      const Hero(
                         tag: 'logo',
-                        child: Container(
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xFF405DE6),
-                                Color(0xFF5851DB),
-                                Color(0xFF833AB4),
-                                Color(0xFFC13584),
-                                Color(0xFFE1306C),
-                                Color(0xFFFD1D1D),
-                                Color(0xFFF56040),
-                                Color(0xFFF77737),
-                                Color(0xFFFCAF45),
-                              ],
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
-                            ),
-                            borderRadius: BorderRadius.circular(25),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.purple.withValues(alpha: 0.2),
-                                blurRadius: 20,
-                                offset: const Offset(0, 10),
-                              ),
-                            ],
-                          ),
-                          child: Text(
-                            "M",
-                            style: GoogleFonts.lobster(
-                              fontSize: 60,
-                              color: Colors.white,
-                              height: 1.1,
-                            ),
-                          ),
+                        child: MonogramLogo(
+                          size: 100,
+                          borderRadius: 25,
+                          fontSize: 60,
                         ),
                       ),
                       const SizedBox(height: 25),
