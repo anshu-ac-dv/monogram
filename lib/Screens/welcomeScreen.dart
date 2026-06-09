@@ -46,15 +46,39 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       Hero(
                         tag: 'logo',
                         child: Container(
-                          padding: const EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
-                            color: Colors.blueAccent.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(30),
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xFF405DE6),
+                                Color(0xFF5851DB),
+                                Color(0xFF833AB4),
+                                Color(0xFFC13584),
+                                Color(0xFFE1306C),
+                                Color(0xFFFD1D1D),
+                                Color(0xFFF56040),
+                                Color(0xFFF77737),
+                                Color(0xFFFCAF45),
+                              ],
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                            ),
+                            borderRadius: BorderRadius.circular(25),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.purple.withValues(alpha: 0.2),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
                           ),
-                          child: const Icon(
-                            Icons.auto_awesome_mosaic_rounded,
-                            size: 80,
-                            color: Colors.blueAccent,
+                          child: Text(
+                            "M",
+                            style: GoogleFonts.lobster(
+                              fontSize: 60,
+                              color: Colors.white,
+                              height: 1.1,
+                            ),
                           ),
                         ),
                       ),

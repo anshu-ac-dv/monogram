@@ -65,12 +65,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           Positioned(
             top: -100,
             right: -50,
-            child: _buildBlurCircle(300, Colors.blueAccent.withValues(alpha: 0.2)),
+            child: _buildBlurCircle(300, Colors.purpleAccent.withValues(alpha: 0.15)),
           ),
           Positioned(
             bottom: -50,
             left: -50,
-            child: _buildBlurCircle(250, Colors.blue.withValues(alpha: 0.15)),
+            child: _buildBlurCircle(250, Colors.orangeAccent.withValues(alpha: 0.1)),
           ),
           
           SafeArea(
@@ -86,31 +86,38 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                     child: ScaleTransition(
                       scale: _scaleAnimation,
                       child: Container(
-                        padding: const EdgeInsets.all(25),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.05),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.1),
-                            width: 1.5,
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFF405DE6),
+                              Color(0xFF5851DB),
+                              Color(0xFF833AB4),
+                              Color(0xFFC13584),
+                              Color(0xFFE1306C),
+                              Color(0xFFFD1D1D),
+                              Color(0xFFF56040),
+                              Color(0xFFF77737),
+                              Color(0xFFFCAF45),
+                            ],
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
                           ),
+                          borderRadius: BorderRadius.circular(35),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.blueAccent.withValues(alpha: 0.1),
+                              color: Colors.purple.withValues(alpha: 0.3),
                               blurRadius: 40,
                               spreadRadius: 5,
                             ),
                           ],
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: const Icon(
-                              Icons.auto_awesome, // More modern unique icon
-                              size: 80,
-                              color: Colors.white,
-                            ),
+                        child: Text(
+                          "M",
+                          style: GoogleFonts.lobster(
+                            fontSize: 80,
+                            color: Colors.white,
+                            height: 1.1,
                           ),
                         ),
                       ),
@@ -162,7 +169,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                           height: 2,
                           child: LinearProgressIndicator(
                             backgroundColor: Colors.white10,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFC13584)), // Instagram-like Pink
                           ),
                         ),
                         const SizedBox(height: 30),
