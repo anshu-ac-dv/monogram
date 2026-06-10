@@ -6,6 +6,7 @@ import 'package:monogram/Screens/home_screen.dart';
 import 'package:monogram/Screens/login_screen.dart';
 import 'package:monogram/Toast/errorToast.dart';
 import 'package:monogram/Widgets/button.dart';
+import 'package:monogram/Widgets/monogram_logo.dart';
 import 'package:monogram/Widgets/social_media_login.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -94,10 +95,12 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const MonogramLogo(size: 70, borderRadius: 18, fontSize: 45),
+                  const SizedBox(height: 10),
                   Text(
                     "Join Us",
                     style: GoogleFonts.lobster(
-                      fontSize: 40,
+                      fontSize: 32,
                       color: Colors.white,
                     ),
                   ),
