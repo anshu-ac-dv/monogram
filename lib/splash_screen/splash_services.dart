@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:monogram/Screens/home_screen.dart';
-import 'package:monogram/Screens/welcomeScreen.dart';
+import 'package:monogram/Screens/welcome_screen.dart';
 
 
 class SplashServices {

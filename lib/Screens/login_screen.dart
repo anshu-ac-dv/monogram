@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:monogram/Screens/home_screen.dart';
 import 'package:monogram/Screens/signup_screen.dart';
-import 'package:monogram/Toast/errorToast.dart';
+import 'package:monogram/Toast/error_toast.dart';
 import 'package:monogram/Widgets/button.dart';
 import 'package:monogram/Widgets/monogram_logo.dart';
 import 'package:monogram/Widgets/social_media_login.dart';

@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:monogram/Toast/errorToast.dart';
+import 'package:monogram/Toast/error_toast.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({super.key});

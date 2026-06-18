@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:monogram/Screens/ProfileScreen.dart';
-import 'package:monogram/Screens/SearchScreen.dart';
-import 'package:monogram/Screens/addPost.dart';
-import 'package:monogram/Screens/chatScreen.dart';
+import 'package:monogram/Screens/profile_screen.dart';
+import 'package:monogram/Screens/search_screen.dart';
+import 'package:monogram/Screens/add_post.dart';
+import 'package:monogram/Screens/chat_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
